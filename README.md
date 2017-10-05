@@ -1,4 +1,4 @@
-<img style="float:left; padding-right: 30px; scale: 0.8;" src="/assets/character/svg/tucker.svg" />
+<img align="left" src="/assets/character/svg/tucker.svg" />
 
 Flapper is a remix of the popular game "Flappy Bird". It was built using basic web technologies and concepts. Powered entirely by CSS animations, it's goal is to showcase how powerful these technologies are and how you can use them to make your own games with very little experience necessary.
 
