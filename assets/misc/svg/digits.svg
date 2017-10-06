@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="312px" height="40px" viewBox="0 0 312 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
+    <title>digits</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="digits" fill="#000000">
+            <polygon id="two" points="84 0 64 0 64 8 80 8 80 16 64 16 64 40 88 40 88 32 72 32 72 24 88 24 88 0"></polygon>
+            <polygon id="one" points="32 32 32 40 56 40 56 32 48 32 48 0 32 0 32 8 40 8 40 32"></polygon>
+            <polygon id="three" points="112 11 112 8 96 8 96 0 120 0 120 40 96 40 96 32 112 32 112 24 96 24 96 16 112 16"></polygon>
+            <polygon id="four" points="152 40 152 0 144 0 144 16 136 16 136 0 128 0 128 24 144 24 144 40"></polygon>
+            <polygon id="five" points="179 0 160 0 160 24 176 24 176 32 160 32 160 40 184 40 184 16 168 16 168 8 184 8 184 0"></polygon>
+            <polygon id="seven" points="240 36 240 8 224 8 224 0 248 0 248 40 240 40"></polygon>
+            <path d="M0,0 L24,0 L24,40 L0,40 L0,0 Z M8,8 L16,8 L16,32 L8,32 L8,8 Z" id="zero"></path>
+            <path d="M192,0 L216,0 L216,40 L192,40 L192,0 Z M200,0 L216,0 L216,16 L200,16 L200,0 Z M200,24 L208,24 L208,32 L200,32 L200,24 Z" id="six"></path>
+            <path d="M256,0 L280,0 L280,40 L256,40 L256,0 Z M264,8 L272,8 L272,16 L264,16 L264,8 Z M264,24 L272,24 L272,32 L264,32 L264,24 Z" id="eight"></path>
+            <path d="M288,0 L312,0 L312,40 L288,40 L288,0 Z M288,24 L304,24 L304,40 L288,40 L288,24 Z M296,8 L304,8 L304,16 L296,16 L296,8 Z" id="nine"></path>
+        </g>
+    </g>
+</svg>
