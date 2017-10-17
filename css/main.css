@@ -25,7 +25,7 @@ html, body {
   height: 104px;
   position: fixed;
   top: 10px;
-  background-image: url("/assets/clouds.png");
+  background-image: url("../assets/clouds.png");
 }
 
 #fields {
@@ -33,5 +33,5 @@ html, body {
   height: 208px;
   position: fixed;
   bottom: 0px;
-  background-image: url("/assets/fields.png");
+  background-image: url("../assets/fields.png");
 }
