@@ -40,7 +40,11 @@ function generateObstacleSVG(id, pipeLength, isUpper, transform) {
   <svg id="pipe-${id}" width="208" height="${pipeLength + 40}" viewBox="0 0 208 ${pipeLength + 40}" transform="${transform}" class="${isUpper == true ? "upper-pipe" : "lower-pipe"}">
       <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="pipe" transform="translate(8.000000, 56.000000)">
-            <path d="M0,0 L192,0 L192,424 L0,424 L0,0 Z M8,8 L184,8 L184,424 L8,424 L8,8 Z" id="pipe-border" fill="#333333"></path>
+            <g id="pipe-border" fill="#333333">
+                <rect x="0" y="0" width="8" height="${pipeLength}"></rect>
+                <rect x="184" y="0" width="8" height="${pipeLength}"></rect>
+                <rect x="8" y="0" width="176" height="8"></rect>
+            </g>
             <rect fill="#3399FF" x="32" y="8" width="8" height="${pipeLength}"></rect>
             <rect fill="#3399FF" x="48" y="8" width="96" height="${pipeLength}"></rect>
             <rect fill="#3399FF" x="152" y="8" width="8" height="${pipeLength}"></rect>
