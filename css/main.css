@@ -13,13 +13,13 @@ html, body {
 .upper-pipe {
   position: fixed;
   top: 0px;
-  right: 0px;
+  right: -300px;
 }
 
 .lower-pipe {
   position: fixed;
   bottom: 0px;
-  right: 0px;
+  right: -300px;
 }
 
 #clouds {

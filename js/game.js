@@ -9,13 +9,17 @@ var gameTickLoop = setInterval(function() {
 
 // clearInterval to stop the gameTickLoop.
 
+var pipeGenerationLoop = setInterval(function() {
+  createObstaclePair();
+}, 7500);
+
 function renderPipeUpdate() {
   for (var column = 0; column < pipes; column++) {
     var columnId = `#pipe-${column + 1}`;
     var pairByPipeId = document.querySelectorAll(columnId);
 
     if (pipePositions[columnId] == undefined) {
-      pipePositions[columnId] = 0;
+      pipePositions[columnId] = -300;
     }
 
     pipePositions[columnId]++;
