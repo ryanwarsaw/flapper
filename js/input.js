@@ -10,10 +10,11 @@ window.addEventListener("keydown", function (event) {
   switch(event.key) {
     case "Spacebar", " ":
       // The space bar was pressed, we need to call a Jump event.
+      callAnimation();
       break;
     case "Escape":
       // "esc" key was pressed, handle event accordingly.
-      createObstaclePair();
+      //createObstaclePair();
       break;
     default:
       return;

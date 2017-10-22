@@ -22,6 +22,39 @@ html, body {
   right: -300px;
 }
 
+#character #wing {
+  transform-origin: bottom center;
+  animation: flap 0.25s linear infinite;
+}
+
+@keyframes flap {
+  to {
+    transform: rotate(-15deg);
+  }
+}
+
+.character-jump-animation {
+  animation: jump 0.35s linear;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.155, 0.650, 0.560, 0.840);
+  animation-play-state: running;
+}
+
+@keyframes jump {
+  100% {
+    top: 350px;
+  }
+}
+
+#character {
+  height: 300px;
+  width: 100%;
+  position: fixed;
+  left: 400px;
+  top: 400px;
+  transform: scale(0.35);
+}
+
 #clouds {
   width: 100%;
   height: 104px;
