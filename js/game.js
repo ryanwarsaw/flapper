@@ -1,51 +1,73 @@
-var ticksPerSecond = 60;
-var pipePositions = {};
-var leadingIndex = 1;
-
 var character = createCharacter("#character");
+var obstacleManager = new ObstacleManager().init();
+var ticksPerSecond = 60;
 
-var gameTickLoop = setInterval(function() {
-  renderPipeUpdate();
-  cleanUp();
-  character.applyGravity();
-}, 1000 / ticksPerSecond);
+window.onload = function() {
+  obstacleManager.spawnObstacle();
 
-// clearInterval to stop the gameTickLoop.
-
-var pipeGenerationLoop = setInterval(function() {
-  createObstaclePair();
-}, 3750);
-
-function renderPipeUpdate() {
-  for (var column = 0; column < pipes; column++) {
-    var columnId = `#pipe-${column + 1}`;
-    var pairByPipeId = document.querySelectorAll(columnId);
-
-    if (pipePositions[columnId] == undefined) {
-      pipePositions[columnId] = -300;
-    }
-
-    pipePositions[columnId] += 2;
-
-    for (var i = 0; i < pairByPipeId.length; i++) {
-      pairByPipeId[i].style.right = pipePositions[columnId];
-    }
-  }
+  var gameTickLoop = setInterval(function() {
+    character.applyGravity();
+    obstacleManager.applyMovementAll();
+    obstacleManager.shouldSpawnObstacle();
+  }, 1000 / ticksPerSecond);
 }
 
-/**
- This is a janky implementation for cleaning up pipes once they run off the page.
- **/
-function cleanUp() {
-  var columnId = `#pipe-${leadingIndex}`;
-  if (pipePositions[columnId] > window.innerWidth) {
-    var pairByPipeId = document.querySelectorAll(columnId);
+function ObstacleManager() {
+  return {
+    /**
+     * Internal properties, DO NOT write directly to them, used to maintain internal state.
+     **/
+    props: {
+      obstacles: [],
+      leadIndex: 1
+    },
 
-    for (var i = 0; i < pairByPipeId.length; i++) {
-      pairByPipeId[i].parentNode.removeChild(pairByPipeId[i]);
+
+    init: function() {
+      return this;
+    },
+
+    /**
+     * Iterates through the array of obstacles this instance of ObstacleManager is managing,
+     * and updates their positions every tick to create the forward-moving animation.
+     **/
+    applyMovementAll: function() {
+      this.props.obstacles.forEach(function(obstacle) {
+        obstacle.applyMovement();
+      });
+    },
+
+    /**
+     * Creates a new Obstacle object, initializes it and inserts it into the DOM.
+     * Adds the new obstacle to the array of obstacles managed by this instance, and updates the lead index.
+     **/
+    spawnObstacle: function() {
+      var obstacle = createObstacle(this.props.leadIndex).init();
+      obstacle.insert();
+      this.props.obstacles.push(obstacle);
+      this.props.leadIndex++;
+    },
+
+    /**
+     * Distance-based function that determines whether it's time to spawn a new obstacle into the game.
+     * Cleans up obstacles that have run off the page so we don't spend processing time updating them.
+     **/
+    shouldSpawnObstacle: function() {
+      var lastSpawnedObstacle = this.props.obstacles[this.props.obstacles.length - 1];
+      // Distance between each obstacle is 500px, the starting position is -300px.
+      if (lastSpawnedObstacle.props.position >= 200) {
+        this.spawnObstacle();
+      }
+
+      var firstSpawnedObstacle = this.props.obstacles[0];
+      if (firstSpawnedObstacle.props.position > window.innerWidth) {
+        this.props.obstacles.splice(0, 1);
+        firstSpawnedObstacle.remove();
+      }
     }
-
-    pipePositions[`#pipe-${leadingIndex}`] = undefined;
-    leadingIndex++;
-  }
+  };
 }
+
+window.addEventListener("onresize", function(event) {
+  // TODO: Implement obstacle resizing at position.
+});
