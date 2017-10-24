@@ -50,9 +50,13 @@ html, body {
   height: 300px;
   width: 100%;
   position: fixed;
-  left: 400px;
-  top: 400px;
+  margin: auto;
   transform: scale(0.35);
+}
+
+#character svg {
+  margin: auto;
+  width: 100%;
 }
 
 #clouds {

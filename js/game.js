@@ -1,6 +1,8 @@
 var character = createCharacter("#character");
 var obstacleManager = new ObstacleManager().init();
-var ticksPerSecond = 60;
+var collisionHandler = new CollisionHandler(character).init();
+
+var TICKS_PER_SECOND = 60;
 
 window.onload = function() {
   obstacleManager.spawnObstacle();
@@ -9,7 +11,32 @@ window.onload = function() {
     character.applyGravity();
     obstacleManager.applyMovementAll();
     obstacleManager.shouldSpawnObstacle();
-  }, 1000 / ticksPerSecond);
+    collisionHandler.hasCharacterCollided();
+  }, 1000 / TICKS_PER_SECOND);
+}
+
+// https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+// We need to narrow down the scope of what we want to check against for a collision.
+// If we implement scoring, then we could effectively narrow it down to three items to check.
+function CollisionHandler(characterToHandle) {
+  return {
+    /**
+     * Internal properties, DO NOT write directly to them, used to maintain internal state.
+     **/
+    props: {
+      character: characterToHandle,
+    },
+
+    init: function() {
+      return this;
+    },
+
+    hasCharacterCollided: function() {
+      if (this.props.character.props.position > window.innerHeight) {
+        // TODO: The character has gone off the bottom screen.
+      }
+    },
+  };
 }
 
 function ObstacleManager() {
