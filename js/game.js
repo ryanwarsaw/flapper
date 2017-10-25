@@ -1,6 +1,7 @@
 var character = createCharacter("#character");
-var obstacleManager = new ObstacleManager().init();
-var collisionHandler = new CollisionHandler(character).init();
+var scoreManager = new ScoreManager().init();
+var obstacleManager = new ObstacleManager(scoreManager).init();
+var collisionHandler = new CollisionHandler(character, scoreManager, obstacleManager).init();
 
 var TICKS_PER_SECOND = 60;
 
@@ -18,7 +19,7 @@ window.onload = function() {
 // https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
 // We need to narrow down the scope of what we want to check against for a collision.
 // If we implement scoring, then we could effectively narrow it down to three items to check.
-function CollisionHandler(characterToHandle) {
+function CollisionHandler(characterToHandle, scoreManager, obstacleManager) {
   return {
     /**
      * Internal properties, DO NOT write directly to them, used to maintain internal state.
@@ -31,15 +32,47 @@ function CollisionHandler(characterToHandle) {
       return this;
     },
 
+    // TODO: Assume that our initial potential collisions are obstacle-1, and the ground.
+    // When the score has been updated, that means we successfully passed another obstacle
+    // So we should update our potential collisions to obstacle-2, and so on...
     hasCharacterCollided: function() {
       if (this.props.character.props.position > window.innerHeight) {
         // TODO: The character has gone off the bottom screen.
       }
+
+      // Relevant obstacle to check against for collisions.
+      var obstacleId = scoreManager.props.score + 1;
+      var obstacle = obstacleManager.getObstacleById(obstacleId);
+
+      var characterX = window.innerWidth / 2;
+      var characterY = this.props.character.props.position;
+      var characterHeight = 95;
+      var characterWidth = 150;
+
     },
   };
 }
 
-function ObstacleManager() {
+function ScoreManager() {
+  return {
+    /**
+     * Internal properties, DO NOT write directly to them, used to maintain internal state.
+     **/
+    props: {
+      score: 0
+    },
+
+    init: function() {
+      return this;
+    },
+
+    incrementScore: function() {
+      this.props.score++;
+    }
+  };
+}
+
+function ObstacleManager(scoreManager) {
   return {
     /**
      * Internal properties, DO NOT write directly to them, used to maintain internal state.
@@ -69,7 +102,7 @@ function ObstacleManager() {
      * Adds the new obstacle to the array of obstacles managed by this instance, and updates the lead index.
      **/
     spawnObstacle: function() {
-      var obstacle = createObstacle(this.props.leadIndex).init();
+      var obstacle = createObstacle(this.props.leadIndex, scoreManager).init();
       obstacle.insert();
       this.props.obstacles.push(obstacle);
       this.props.leadIndex++;
@@ -91,6 +124,18 @@ function ObstacleManager() {
         this.props.obstacles.splice(0, 1);
         firstSpawnedObstacle.remove();
       }
+    },
+
+    /**
+     * Searches through the array of obstacles this instance of ObstacleManager manages,
+     * and returns the first that has a matching obstacle id to the id parameter provided.
+     **/
+    getObstacleById: function(id) {
+      this.props.obstacles.forEach(function(obstacle) {
+        if (obstacle.props.obstacleId == id) {
+          return obstacle;
+        }
+      });
     }
   };
 }

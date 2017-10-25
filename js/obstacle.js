@@ -1,4 +1,4 @@
-function createObstacle(obstacleId) {
+function createObstacle(obstacleId, scoreManager) {
   return {
     /**
      * Internal properties, DO NOT write directly to them, used to maintain internal state.
@@ -8,7 +8,8 @@ function createObstacle(obstacleId) {
       upperPipe: null,
       lowerPipe: null,
       randomChunk: -1,
-      position: -300
+      position: -300,
+      hasPassed: false
     },
 
     init: function() {
@@ -24,6 +25,12 @@ function createObstacle(obstacleId) {
     * The renderer calls this method every tick to create a forward moving animation.
     */
     applyMovement: function() {
+      var CHARACTER_BODY_OFFSET = 75; // 199 for full scale.
+      if (!this.props.hasPassed && (window.innerWidth / 2) + CHARACTER_BODY_OFFSET <= this.props.position) {
+        scoreManager.incrementScore();
+        this.props.hasPassed = true;
+      }
+
       this.props.position = (this.props.position += 2);
       var elArr = document.querySelectorAll(`#game #obstacle-${this.props.id} #pipe-${this.props.id}`);
       elArr[0].style.right = this.props.position;

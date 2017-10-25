@@ -5,7 +5,7 @@ function createCharacter(id) {
      **/
     props: {
       applyGravity: true,
-      position: -1
+      position: -1,
     },
 
     init: function() {
