@@ -9,7 +9,7 @@ function createObstacle(obstacleId, scoreManager) {
       lowerPipe: null,
       randomChunk: -1,
       position: -300,
-      hasPassed: false
+      hasPassed: false,
     },
 
     init: function() {
@@ -25,13 +25,15 @@ function createObstacle(obstacleId, scoreManager) {
     * The renderer calls this method every tick to create a forward moving animation.
     */
     applyMovement: function() {
-      var CHARACTER_BODY_OFFSET = 75; // 199 for full scale.
+      var CHARACTER_BODY_OFFSET = 75; // Transform scale offset in px.
       if (!this.props.hasPassed && (window.innerWidth / 2) + CHARACTER_BODY_OFFSET <= this.props.position) {
         scoreManager.incrementScore();
         this.props.hasPassed = true;
       }
 
       this.props.position = (this.props.position += 2);
+      this.props.lowerPipe.x = this.props.position;
+      this.props.upperPipe.x = this.props.position;
       var elArr = document.querySelectorAll(`#game #obstacle-${this.props.id} #pipe-${this.props.id}`);
       elArr[0].style.right = this.props.position;
       elArr[1].style.right = this.props.position;
@@ -45,8 +47,8 @@ function createObstacle(obstacleId, scoreManager) {
       obstacleDiv.id = `obstacle-${this.props.id}`;
       // TODO: Consolidate this into just one DOM write.
       document.getElementById('game').appendChild(obstacleDiv);
-      document.getElementById(obstacleDiv.id).insertAdjacentHTML('beforeend', this.props.lowerPipe);
-      document.getElementById(obstacleDiv.id).insertAdjacentHTML('beforeend', this.props.upperPipe);
+      document.getElementById(obstacleDiv.id).insertAdjacentHTML('beforeend', this.props.lowerPipe.svg);
+      document.getElementById(obstacleDiv.id).insertAdjacentHTML('beforeend', this.props.upperPipe.svg);
     },
 
     /**
@@ -63,16 +65,42 @@ function createObstacle(obstacleId, scoreManager) {
      **/
     rescale: function() {
       var PIPE_GAP_OFFSET = 320; // Accounts for pipe header, and gap.
+      var PIPE_SCALE_BY = 0.75; // Scale constant, must change if SVG transform changes.
+
       var totalPipeHeight = window.innerHeight - PIPE_GAP_OFFSET;
       var firstPipeHeight = (totalPipeHeight / 10) * this.props.randomChunk;
       var secondPipeHeight = totalPipeHeight - firstPipeHeight;
 
       if (this.props.randomChunk % 2 == 0) {
-        this.props.lowerPipe = this.createObstacleSVG(firstPipeHeight, false);
-        this.props.upperPipe = this.createObstacleSVG(secondPipeHeight, true);
+        this.props.lowerPipe = {
+          x: -300,
+          y: window.innerHeight,
+          height: ((firstPipeHeight + 40) * PIPE_SCALE_BY),
+          width: 208 * PIPE_SCALE_BY,
+          svg: this.createObstacleSVG(firstPipeHeight, false)
+        };
+        this.props.upperPipe = {
+          x: -300,
+          y: 0,
+          height: ((secondPipeHeight + 40) * PIPE_SCALE_BY),
+          width: 208 * PIPE_SCALE_BY,
+          svg: this.createObstacleSVG(secondPipeHeight, true)
+        };
       } else {
-        this.props.upperPipe = this.createObstacleSVG(firstPipeHeight, true);
-        this.props.lowerPipe = this.createObstacleSVG(secondPipeHeight, false);
+        this.props.upperPipe = {
+          x: -300,
+          y: 0,
+          height: ((firstPipeHeight + 40) * PIPE_SCALE_BY),
+          width: 208 * PIPE_SCALE_BY,
+          svg: this.createObstacleSVG(firstPipeHeight, true)
+        };
+        this.props.lowerPipe = {
+          x: -300,
+          y: window.innerHeight,
+          height: ((secondPipeHeight + 40) * PIPE_SCALE_BY),
+          width: 208 * PIPE_SCALE_BY,
+          svg: this.createObstacleSVG(secondPipeHeight, false)
+        };
       }
     },
 

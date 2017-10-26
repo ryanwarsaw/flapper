@@ -16,9 +16,6 @@ window.onload = function() {
   }, 1000 / TICKS_PER_SECOND);
 }
 
-// https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
-// We need to narrow down the scope of what we want to check against for a collision.
-// If we implement scoring, then we could effectively narrow it down to three items to check.
 function CollisionHandler(characterToHandle, scoreManager, obstacleManager) {
   return {
     /**
@@ -32,24 +29,43 @@ function CollisionHandler(characterToHandle, scoreManager, obstacleManager) {
       return this;
     },
 
-    // TODO: Assume that our initial potential collisions are obstacle-1, and the ground.
-    // When the score has been updated, that means we successfully passed another obstacle
-    // So we should update our potential collisions to obstacle-2, and so on...
+    /**
+     * Checks various cases where the character could potentially collide with its environment.
+     * For example: It has gone off the bottom of the screen, or hit a lower/upper pipe.
+     **/
     hasCharacterCollided: function() {
       if (this.props.character.props.position > window.innerHeight) {
         // TODO: The character has gone off the bottom screen.
       }
 
-      // Relevant obstacle to check against for collisions.
       var obstacleId = scoreManager.props.score + 1;
       var obstacle = obstacleManager.getObstacleById(obstacleId);
 
+      var lowerPipe = obstacle.props.lowerPipe;
+      if (this.checkForCollision(character, lowerPipe)) {
+        // TODO: Collision has been detected.
+        console.log(`Character has collided with the lower pipe.`);
+      }
+
+      var upperPipe = obstacle.props.upperPipe;
+      if (this.checkForCollision(character, upperPipe)) {
+        // TODO: Collision has been detected.
+        console.log(`Character has collided with the upper pipe.`);
+      }
+    },
+
+    /**
+     * Utility function that takes in a character and pipe object, and determines if a collision has happened.
+     **/
+    checkForCollision: function(character, pipe) {
+      // TODO: Maybe implement the same positional structure here as we did for obstacles.
       var characterX = window.innerWidth / 2;
       var characterY = this.props.character.props.position;
       var characterHeight = 95;
       var characterWidth = 150;
-
-    },
+      return characterX < (pipe.x + pipe.width) && (characterX + characterWidth) > pipe.x &&
+          characterY < (pipe.y + pipe.height) && (characterHeight + characterY) > pipe.y;
+    }
   };
 }
 
@@ -131,15 +147,17 @@ function ObstacleManager(scoreManager) {
      * and returns the first that has a matching obstacle id to the id parameter provided.
      **/
     getObstacleById: function(id) {
+      var result;
       this.props.obstacles.forEach(function(obstacle) {
-        if (obstacle.props.obstacleId == id) {
-          return obstacle;
+        if (obstacle.props.id == id) {
+          result = obstacle;
         }
       });
+      return result;
     }
   };
 }
 
-window.addEventListener("onresize", function(event) {
+window.addEventListener("resize", function(event) {
   // TODO: Implement obstacle resizing at position.
 });
