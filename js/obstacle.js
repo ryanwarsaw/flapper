@@ -35,8 +35,9 @@ function createObstacle(obstacleId, scoreManager) {
       this.props.lowerPipe.x = this.props.position;
       this.props.upperPipe.x = this.props.position;
       var elArr = document.querySelectorAll(`#game #obstacle-${this.props.id} #pipe-${this.props.id}`);
-      elArr[0].style.right = this.props.position;
-      elArr[1].style.right = this.props.position;
+      console.log(elArr[0].style.right);
+      elArr[0].style.right = this.props.position + "px";
+      elArr[1].style.right = this.props.position + "px";
     },
 
     /**
