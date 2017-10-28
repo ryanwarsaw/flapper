@@ -9,7 +9,7 @@ function createObstacle(obstacleId, scoreManager) {
       lowerPipe: null,
       randomChunk: -1,
       position: -300,
-      hasPassed: false,
+      hasPassed: false
     },
 
     init: function() {
@@ -35,7 +35,6 @@ function createObstacle(obstacleId, scoreManager) {
       this.props.lowerPipe.x = this.props.position;
       this.props.upperPipe.x = this.props.position;
       var elArr = document.querySelectorAll(`#game #obstacle-${this.props.id} #pipe-${this.props.id}`);
-      console.log(elArr[0].style.right);
       elArr[0].style.right = this.props.position + "px";
       elArr[1].style.right = this.props.position + "px";
     },
@@ -113,7 +112,7 @@ function createObstacle(obstacleId, scoreManager) {
       var upperTransform = "scale(-0.75, 1) rotate(180)";
       var lowerTransform = "scale(0.75, 1)";
       return `
-      <svg id="pipe-${this.props.id}" width="208" height="${pipeHeight + 40}" viewBox="0 0 208 ${pipeHeight + 40}" transform="${isUpper == true ? upperTransform : lowerTransform}" class="${isUpper == true ? "upper-pipe" : "lower-pipe"}">
+      <svg id="pipe-${this.props.id}" width="208" height="${pipeHeight + 40}" viewBox="0 0 208 ${pipeHeight + 40}" class="${isUpper == true ? "upper-pipe" : "lower-pipe"}">
           <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
             <g id="pipe" transform="translate(8.000000, 56.000000)">
                 <g id="pipe-border" fill="#333333">

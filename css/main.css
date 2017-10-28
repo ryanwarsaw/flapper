@@ -23,12 +23,14 @@ html, body {
   position: fixed;
   top: 0px;
   right: -300px;
+  transform: rotate(180deg) scale(-0.75, 1);
 }
 
 .lower-pipe {
   position: fixed;
   bottom: 0px;
   right: -300px;
+  transform: scale(0.75, 1);
 }
 
 #character #wing {
