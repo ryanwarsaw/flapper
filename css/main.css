@@ -3,6 +3,15 @@ html, body {
   height: 100%;
 }
 
+#score {
+  margin: 0;
+  padding: 15px;
+  position: fixed;
+  z-index: 1;
+  color: #fff;
+  font-family: 'Helvetica', sans-serif;
+}
+
 #game {
   background-color: #99ccff;
   margin: 0;

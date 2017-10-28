@@ -84,6 +84,12 @@ function ScoreManager() {
 
     incrementScore: function() {
       this.props.score++;
+      this.updateScoreDisplay();
+    },
+
+    updateScoreDisplay: function() {
+      var scoreEl = document.getElementById('score');
+      scoreEl.innerHTML = `Score: ${this.props.score}`;
     }
   };
 }

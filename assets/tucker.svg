@@ -4,7 +4,7 @@
     <title>tucker</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="tucker">
             <polygon id="top-beak" fill="#FD6E1E" points="264 64 231 64 231 0 359 0 359 8 375 8 375 16 383 16 383 24 391 24 391 40 399 40 399 56 391 56 391 64"></polygon>
             <polygon id="bottom-beak" fill="#FD6E1E" points="328 80 279 80 279 72 231 72 231 88 247 88 247 96 287 96 287 104 335 104 335 112 383 112 383 96 391 96 391 88 343 88 343 80"></polygon>
