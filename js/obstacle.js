@@ -96,7 +96,7 @@ function createObstacle(obstacleId, scoreManager) {
         };
         this.props.lowerPipe = {
           x: -300,
-          y: window.innerHeight,
+          y: window.innerHeight - ((secondPipeHeight + 40) * PIPE_SCALE_BY),
           height: ((secondPipeHeight + 40) * PIPE_SCALE_BY),
           width: 208 * PIPE_SCALE_BY,
           svg: this.createObstacleSVG(secondPipeHeight, false)
