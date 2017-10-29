@@ -9,14 +9,21 @@ window.addEventListener("keydown", function (event) {
 
   switch(event.key) {
     case "Spacebar", " ":
+      if (gameState.props.state !== "running") {
+        gameState.setState("running");
+      }
       character.jump();
       break;
     case "Escape":
-      // TODO: Implement ability to pause the game.
+      if (gameState.props.state !== "running") {
+        gameState.setState("running");
+      } else {
+        gameState.setState("paused");
+      }
       break;
     default:
       return;
   }
-
+  
   event.preventDefault();
 }, true);

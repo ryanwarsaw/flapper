@@ -36,6 +36,7 @@ html, body {
 #character #wing {
   transform-origin: bottom center;
   animation: flap 0.25s linear infinite;
+  animation-play-state: running;
 }
 
 @keyframes flap {

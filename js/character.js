@@ -50,7 +50,7 @@ function createCharacter(id) {
       var keyframes = findKeyframesRule("jump");
       keyframes.deleteRule("100%");
       keyframes.appendRule(`100% { top: ${this.props.position - 100}px; }`, 0);
-    }
+    },
   };
 }
 

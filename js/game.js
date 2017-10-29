@@ -2,6 +2,7 @@ var character = createCharacter("#character");
 var scoreManager = new ScoreManager().init();
 var obstacleManager = new ObstacleManager(scoreManager).init();
 var collisionHandler = new CollisionHandler(character, scoreManager, obstacleManager).init();
+var gameState = new GameState();
 
 var TICKS_PER_SECOND = 60;
 
@@ -9,11 +10,34 @@ window.onload = function() {
   obstacleManager.spawnObstacle();
 
   var gameTickLoop = setInterval(function() {
-    character.applyGravity();
-    obstacleManager.applyMovementAll();
-    obstacleManager.shouldSpawnObstacle();
-    collisionHandler.hasCharacterCollided();
+    if (gameState.props.state === "running") {
+      character.applyGravity();
+      obstacleManager.applyMovementAll();
+      obstacleManager.shouldSpawnObstacle();
+      collisionHandler.hasCharacterCollided();
+    } else if (gameState.props.state === "ended") {
+      gameState.handleGameEnd();
+    }
   }, 1000 / TICKS_PER_SECOND);
+}
+
+function GameState() {
+  return {
+    props: {
+      state: "paused",
+    },
+
+    setState: function(state) {
+      if (state == "running" || state == "paused" || state == "ended") {
+        console.log("The state has been changed");
+        this.props.state = state;
+      }
+    },
+
+    handleGameEnd: function() {
+      location.reload();
+    }
+  };
 }
 
 function CollisionHandler(characterToHandle, scoreManager, obstacleManager) {
@@ -35,7 +59,7 @@ function CollisionHandler(characterToHandle, scoreManager, obstacleManager) {
      **/
     hasCharacterCollided: function() {
       if (this.props.character.props.position > window.innerHeight) {
-        // TODO: The character has gone off the bottom screen.
+        gameState.setState("ended");
       }
 
       var obstacleId = scoreManager.props.score + 1;
@@ -43,14 +67,13 @@ function CollisionHandler(characterToHandle, scoreManager, obstacleManager) {
 
       var lowerPipe = obstacle.props.lowerPipe;
       if (this.checkForCollision(character, lowerPipe)) {
-        // TODO: Collision has been detected.
-        console.log(`Character has collided with the lower pipe.`);
+        // TODO: For some reason lower pipe collision isn't working properly.
+        gameState.setState("ended");
       }
 
       var upperPipe = obstacle.props.upperPipe;
       if (this.checkForCollision(character, upperPipe)) {
-        // TODO: Collision has been detected.
-        console.log(`Character has collided with the upper pipe.`);
+        gameState.setState("ended");
       }
     },
 
