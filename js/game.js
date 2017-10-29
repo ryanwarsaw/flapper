@@ -23,17 +23,25 @@ window.onload = function() {
 
 function GameState() {
   return {
+    /**
+     * Internal properties, DO NOT write directly to them, used to maintain internal state.
+     **/
     props: {
       state: "paused",
     },
 
+    /**
+     * Updates the state property if it's been validated to be a proper state value.
+     **/
     setState: function(state) {
       if (state == "running" || state == "paused" || state == "ended") {
-        console.log("The state has been changed");
         this.props.state = state;
       }
     },
 
+    /**
+     * Reloads the page, basically a super janky (but functional) way to reset the game.
+     **/
     handleGameEnd: function() {
       location.reload();
     }
@@ -105,11 +113,18 @@ function ScoreManager() {
       return this;
     },
 
+    /**
+     * Increments the score property, and also calls updateScoreDisplay which will
+     * update the visible score shown to the player in the top-left corner of their screen.
+     **/
     incrementScore: function() {
       this.props.score++;
       this.updateScoreDisplay();
     },
 
+    /**
+     * Updates the score element with the new score, will trigger a write to DOM.
+     **/
     updateScoreDisplay: function() {
       var scoreEl = document.getElementById('score');
       scoreEl.innerHTML = `Score: ${this.props.score}`;
