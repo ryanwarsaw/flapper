@@ -109,8 +109,6 @@ function createObstacle(obstacleId, scoreManager) {
      * For example, if we want to generate an upside down pipe, or maybe we want to rescale a pipe.
      **/
     createObstacleSVG: function(pipeHeight, isUpper) {
-      var upperTransform = "scale(-0.75, 1) rotate(180)";
-      var lowerTransform = "scale(0.75, 1)";
       return `
       <svg id="pipe-${this.props.id}" width="208" height="${pipeHeight + 40}" viewBox="0 0 208 ${pipeHeight + 40}" class="${isUpper == true ? "upper-pipe" : "lower-pipe"}">
           <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
