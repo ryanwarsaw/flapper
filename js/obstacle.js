@@ -64,7 +64,7 @@ function createObstacle(obstacleId, scoreManager) {
      * For example, if the user scales their viewport down and the pipes now overlap and need rescaled.
      **/
     rescale: function() {
-      var PIPE_GAP_OFFSET = 320; // Accounts for pipe header, and gap.
+      var PIPE_GAP_OFFSET = 360; // Accounts for pipe header, and gap.
       var PIPE_SCALE_BY = 0.75; // Scale constant, must change if SVG transform changes.
 
       var totalPipeHeight = window.innerHeight - PIPE_GAP_OFFSET;
