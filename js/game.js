@@ -17,6 +17,7 @@ window.onload = function() {
       collisionHandler.hasCharacterCollided();
     } else if (gameState.props.state === "ended") {
       gameState.handleGameEnd();
+      clearInterval(gameTickLoop);
     }
   }, 1000 / TICKS_PER_SECOND);
 }
