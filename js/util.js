@@ -17,9 +17,14 @@ function findKeyframesRule(name) {
  **/
  function findCSSRule(name) {
    var stylesheet = document.styleSheets[0];
+   console.log("Stylesheet: " + stylesheet);
    for (var i = 0; i < stylesheet.cssRules.length; i++) {
      var cssRule = stylesheet.cssRules[i];
-     if (cssRule.selectorText == name) return cssRule;
+     console.log(`cssRule(${i}): ${cssRule}`)
+     if (cssRule.selectorText == name) {
+       console.log("Found it");
+       return cssRule;
+     }
    }
    return null;
  }
