@@ -17,6 +17,7 @@ function createCharacter(id) {
       // Character's height is 95px, we half this for offset.
       this.updatePosition((window.innerHeight / 2) - 47.5);
       this.toggleVisibility();
+      return this;
     },
 
     /**

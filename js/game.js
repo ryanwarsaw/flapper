@@ -1,13 +1,16 @@
 var character = createCharacter("#character");
-var scoreManager = new ScoreManager().init();
-var obstacleManager = new ObstacleManager(scoreManager).init();
-var collisionHandler = new CollisionHandler(character, scoreManager, obstacleManager).init();
+var scoreManager = new ScoreManager();
+var obstacleManager = new ObstacleManager(scoreManager);
+var collisionHandler = new CollisionHandler(character, scoreManager, obstacleManager);
 var gameState = new GameState();
 
 var TICKS_PER_SECOND = 60;
 
-window.onload = function() {
-  character.init();
+window.addEventListener('load', function() {
+  character = character.init();
+  scoreManager = scoreManager.init();
+  obstacleManager = obstacleManager.init();
+  collisionHandler = collisionHandler.init();
   obstacleManager.spawnObstacle();
 
   var gameTickLoop = setInterval(function() {
@@ -21,7 +24,7 @@ window.onload = function() {
       clearInterval(gameTickLoop);
     }
   }, 1000 / TICKS_PER_SECOND);
-}
+});
 
 function GameState() {
   return {
