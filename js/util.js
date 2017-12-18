@@ -20,7 +20,7 @@ function findKeyframesRule(name) {
    console.log("Stylesheet: " + stylesheet);
    for (var i = 0; i < stylesheet.cssRules.length; i++) {
      var cssRule = stylesheet.cssRules[i];
-     console.log(`cssRule(${i}): ${cssRule}`)
+     console.log(`cssRule(${i}): ${cssRule.selectorText}`)
      if (cssRule.selectorText == name) {
        console.log("Found it");
        return cssRule;
