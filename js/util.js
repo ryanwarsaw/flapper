@@ -4,10 +4,14 @@
  * Source (Optimized for flapper): http://jsfiddle.net/russelluresti/RHhBz/3/.
  **/
 function findKeyframesRule(name) {
-  var stylesheet = document.styleSheets[0];
-  for (var i = 0; i < stylesheet.cssRules.length; i++) {
-    var cssRule = stylesheet.cssRules[i];
-    if (cssRule.name == name) return cssRule;
+  for (var x = 0; x < document.styleSheets.length; x++) {
+    var stylesheet = document.styleSheets[x];
+    for (var i = 0; i < stylesheet.cssRules.length; i++) {
+      var rule = stylesheet.cssRules[i];
+      if (rule.name == name) {
+        return rule;
+      }
+    }
   }
   return null;
 }
@@ -16,14 +20,13 @@ function findKeyframesRule(name) {
  * Searches the first loaded style sheet for a CSS rule by name.
  **/
  function findCSSRule(name) {
-   var stylesheet = document.styleSheets[0];
-   console.log("Stylesheet: " + stylesheet);
-   for (var i = 0; i < stylesheet.cssRules.length; i++) {
-     var cssRule = stylesheet.cssRules[i];
-     console.log(`cssRule(${i}): ${cssRule.selectorText}`)
-     if (cssRule.selectorText == name) {
-       console.log("Found it");
-       return cssRule;
+   for (var x = 0; x < document.styleSheets.length; x++) {
+     var stylesheet = document.styleSheets[x];
+     for (var i = 0; i < stylesheet.cssRules.length; i++) {
+       var rule = stylesheet.cssRules[i];
+       if (rule.selectorText == name) {
+         return rule;
+       }
      }
    }
    return null;
