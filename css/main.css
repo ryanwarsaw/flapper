@@ -59,11 +59,10 @@ html, body {
 }
 
 #character {
-  height: 272px;
   width: 100%;
   position: fixed;
   margin: auto;
-  transform: scale(0.35);
+  visibility: hidden;
 }
 
 #character svg {

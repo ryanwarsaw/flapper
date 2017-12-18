@@ -7,6 +7,7 @@ var gameState = new GameState();
 var TICKS_PER_SECOND = 60;
 
 window.onload = function() {
+  character.init();
   obstacleManager.spawnObstacle();
 
   var gameTickLoop = setInterval(function() {
@@ -67,7 +68,11 @@ function CollisionHandler(characterToHandle, scoreManager, obstacleManager) {
      * For example: It has gone off the bottom of the screen, or hit a lower/upper pipe.
      **/
     hasCharacterCollided: function() {
-      if (this.props.character.props.position > window.innerHeight) {
+      /**
+       * Currently we measure the position of the character from the top of the character SVG.
+       * This includes the body offset in pixels (95) to trigger state change once the tail goes off page.
+       **/
+      if ((this.props.character.props.position + 95) > window.innerHeight) {
         gameState.setState("ended");
       }
 

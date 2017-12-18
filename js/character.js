@@ -6,10 +6,17 @@ function createCharacter(id) {
     props: {
       applyGravity: true,
       position: -1,
+      visibility: "hidden"
     },
 
+    /**
+     * Character initializer, sets the position to the middle of the viewport vertically.
+     * Then updates the visibility so that the character is now visible to the player.
+     **/
     init: function() {
-      // TODO: Make the character visible on the center of the page. This is for the title screen.
+      // Character's height is 95px, we half this for offset.
+      this.updatePosition((window.innerHeight / 2) - 47.5);
+      this.toggleVisibility();
     },
 
     /**
@@ -51,6 +58,20 @@ function createCharacter(id) {
       keyframes.deleteRule("100%");
       keyframes.appendRule(`100% { top: ${this.props.position - 100}px; }`, 0);
     },
+
+    /**
+     * Toggles the visibility of the character between "hidden" and "shown".
+     **/
+    toggleVisibility: function() {
+      var cssRule = findCSSRule("#character");
+      if (this.props.visibility === "hidden") {
+        cssRule.style.visibility = "visible";
+        this.props.visibility = "visible";
+      } else {
+        cssRule.style.visibility = "hidden";
+        this.props.visibility = "hidden";
+      }
+    }
   };
 }
 
