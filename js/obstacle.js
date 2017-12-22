@@ -65,8 +65,6 @@ function createObstacle(obstacleId, scoreManager) {
      **/
     rescale: function() {
       var PIPE_GAP_OFFSET = 360; // Accounts for pipe header, and gap.
-      var PIPE_SCALE_BY = 0.75; // Scale constant, must change if SVG transform changes.
-
       var totalPipeHeight = window.innerHeight - PIPE_GAP_OFFSET;
       var firstPipeHeight = (totalPipeHeight / 10) * this.props.randomChunk;
       var secondPipeHeight = totalPipeHeight - firstPipeHeight;
@@ -74,31 +72,31 @@ function createObstacle(obstacleId, scoreManager) {
       if (this.props.randomChunk % 2 == 0) {
         this.props.lowerPipe = {
           x: -300,
-          y: window.innerHeight,
-          height: ((firstPipeHeight + 40) * PIPE_SCALE_BY),
-          width: 208 * PIPE_SCALE_BY,
+          y: window.innerHeight - (firstPipeHeight + 40),
+          height: firstPipeHeight + 40,
+          width: 156,
           svg: this.createObstacleSVG(firstPipeHeight, false)
         };
         this.props.upperPipe = {
           x: -300,
           y: 0,
-          height: ((secondPipeHeight + 40) * PIPE_SCALE_BY),
-          width: 208 * PIPE_SCALE_BY,
+          height: secondPipeHeight + 40,
+          width: 156,
           svg: this.createObstacleSVG(secondPipeHeight, true)
         };
       } else {
         this.props.upperPipe = {
           x: -300,
           y: 0,
-          height: ((firstPipeHeight + 40) * PIPE_SCALE_BY),
-          width: 208 * PIPE_SCALE_BY,
+          height: firstPipeHeight + 40,
+          width: 156,
           svg: this.createObstacleSVG(firstPipeHeight, true)
         };
         this.props.lowerPipe = {
           x: -300,
-          y: window.innerHeight - ((secondPipeHeight + 40) * PIPE_SCALE_BY),
-          height: ((secondPipeHeight + 40) * PIPE_SCALE_BY),
-          width: 208 * PIPE_SCALE_BY,
+          y: window.innerHeight - (secondPipeHeight + 40),
+          height: secondPipeHeight + 40,
+          width: 156,
           svg: this.createObstacleSVG(secondPipeHeight, false)
         };
       }
@@ -110,31 +108,31 @@ function createObstacle(obstacleId, scoreManager) {
      **/
     createObstacleSVG: function(pipeHeight, isUpper) {
       return `
-      <svg id="pipe-${this.props.id}" width="208" height="${pipeHeight + 40}" viewBox="0 0 208 ${pipeHeight + 40}" class="${isUpper == true ? "upper-pipe" : "lower-pipe"}">
+      <svg id="pipe-${this.props.id}" width="156" height="${pipeHeight + 40}" viewBox="0 0 156 ${pipeHeight + 40}" class="${isUpper == true ? "upper-pipe" : "lower-pipe"}">
           <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-            <g id="pipe" transform="translate(8.000000, 56.000000)">
+            <g id="pipe" transform="translate(6.000000, 56.000000)">
                 <g id="pipe-border" fill="#333333">
-                    <rect x="0" y="0" width="8" height="${pipeHeight}"></rect>
-                    <rect x="184" y="0" width="8" height="${pipeHeight}"></rect>
-                    <rect x="8" y="0" width="176" height="8"></rect>
+                    <rect x="0" y="0" width="6" height="${pipeHeight}"></rect>
+                    <rect x="138" y="0" width="6" height="${pipeHeight}"></rect>
+                    <rect x="6" y="0" width="132" height="8"></rect>
                 </g>
-                <rect fill="#3399FF" x="32" y="8" width="8" height="${pipeHeight}"></rect>
-                <rect fill="#3399FF" x="48" y="8" width="96" height="${pipeHeight}"></rect>
-                <rect fill="#3399FF" x="152" y="8" width="8" height="${pipeHeight}"></rect>
-                <rect fill="#59ACFF" x="8" y="8" width="24" height="${pipeHeight}"></rect>
-                <rect fill="#59ACFF" x="40" y="8" width="8" height="${pipeHeight}"></rect>
-                <rect fill="#0066CC" x="160" y="8" width="24" height="${pipeHeight}"></rect>
-                <rect fill="#0066CC" x="144" y="8" width="8" height="${pipeHeight}"></rect>
+                <rect fill="#3399FF" x="24" y="8" width="6" height="${pipeHeight}"></rect>
+                <rect fill="#3399FF" x="36" y="8" width="72" height="${pipeHeight}"></rect>
+                <rect fill="#3399FF" x="114" y="8" width="6" height="${pipeHeight}"></rect>
+                <rect fill="#59ACFF" x="6" y="8" width="18" height="${pipeHeight}"></rect>
+                <rect fill="#59ACFF" x="30" y="8" width="6" height="${pipeHeight}"></rect>
+                <rect fill="#0066CC" x="120" y="8" width="18" height="${pipeHeight}"></rect>
+                <rect fill="#0066CC" x="108" y="8" width="6" height="${pipeHeight}"></rect>
             </g>
-            <g id="pipe-wider">
-                <path d="M0,0 L208,0 L208,56 L0,56 L0,0 Z M8,8 L200,8 L200,48 L8,48 L8,8 Z" id="pipe-border-wider" fill="#333333"></path>
-                <rect fill="#59ACFF" x="8" y="8" width="24" height="40"></rect>
-                <rect fill="#59ACFF" x="40" y="8" width="8" height="40"></rect>
-                <rect fill="#3399FF" x="48" y="8" width="112" height="40"></rect>
-                <rect fill="#3399FF" x="168" y="8" width="8" height="40"></rect>
-                <rect fill="#3399FF" x="32" y="8" width="8" height="40"></rect>
-                <rect fill="#0066CC" x="176" y="8" width="24" height="40"></rect>
-                <rect fill="#0066CC" x="160" y="8" width="8" height="40"></rect>
+            <g id="pipe-wider" fill-rule="nonzero">
+                <path d="M0,0 L156,0 L156,56 L0,56 L0,0 Z M6,8 L150,8 L150,48 L6,48 L6,8 Z" id="pipe-border-wider" fill="#333333"></path>
+                <rect fill="#59ACFF" x="6" y="8" width="18" height="40"></rect>
+                <rect fill="#59ACFF" x="30" y="8" width="6" height="40"></rect>
+                <rect fill="#3399FF" x="36" y="8" width="84" height="40"></rect>
+                <rect fill="#3399FF" x="126" y="8" width="6" height="40"></rect>
+                <rect fill="#3399FF" x="24" y="8" width="6" height="40"></rect>
+                <rect fill="#0066CC" x="132" y="8" width="18" height="40"></rect>
+                <rect fill="#0066CC" x="120" y="8" width="6" height="40"></rect>
             </g>
           </g>
       </svg>`;

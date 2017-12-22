@@ -77,6 +77,7 @@ function CollisionHandler(characterToHandle, scoreManager, obstacleManager) {
        **/
       if ((this.props.character.props.position + 95) > window.innerHeight) {
         gameState.setState("ended");
+        return;
       }
 
       var obstacleId = scoreManager.props.score + 1;
@@ -84,8 +85,8 @@ function CollisionHandler(characterToHandle, scoreManager, obstacleManager) {
 
       var lowerPipe = obstacle.props.lowerPipe;
       if (this.checkForCollision(character, lowerPipe)) {
-        // TODO: For some reason lower pipe collision isn't working properly.
         gameState.setState("ended");
+        return;
       }
 
       var upperPipe = obstacle.props.upperPipe;
@@ -98,13 +99,12 @@ function CollisionHandler(characterToHandle, scoreManager, obstacleManager) {
      * Utility function that takes in a character and pipe object, and determines if a collision has happened.
      **/
     checkForCollision: function(character, pipe) {
-      // TODO: Maybe implement the same positional structure here as we did for obstacles.
-      var characterX = window.innerWidth / 2;
+      var CHARACTER_HEIGHT = 95;
+      var CHARACTER_WIDTH = 150;
+      var characterX = (window.innerWidth / 2) - (CHARACTER_WIDTH / 2);
       var characterY = this.props.character.props.position;
-      var characterHeight = 95;
-      var characterWidth = 150;
-      return characterX < (pipe.x + pipe.width) && (characterX + characterWidth) > pipe.x &&
-          characterY < (pipe.y + pipe.height) && (characterHeight + characterY) > pipe.y;
+      return characterX < (pipe.x + pipe.width) && (characterX + CHARACTER_WIDTH) > pipe.x &&
+          characterY < (pipe.y + pipe.height) && (CHARACTER_HEIGHT + characterY) > pipe.y;
     }
   };
 }
